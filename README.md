@@ -36,7 +36,32 @@ For development from a clone:
 python -m pip install -e .
 ```
 
-## Quick start
+## Try it in 60 seconds
+
+This copy-paste trial clones the project into a temporary directory, installs it
+in an isolated virtual environment, proves the safe fixture exits `0`, and then
+shows the findings from the intentionally broken fixture:
+
+```console
+trial="$(mktemp -d)" && \
+git clone --depth 1 https://github.com/canilbey/checkgate.git "$trial/checkgate" && \
+python3 -m venv "$trial/venv" && \
+"$trial/venv/bin/pip" install -q "$trial/checkgate" && \
+"$trial/venv/bin/checkgate" audit \
+  --workflows "$trial/checkgate/fixtures/safe/workflows" \
+  --required-file "$trial/checkgate/fixtures/safe/required.txt" && \
+( "$trial/venv/bin/checkgate" audit \
+    --workflows "$trial/checkgate/fixtures/workflows" \
+    --required-file "$trial/checkgate/fixtures/required.txt" \
+    --require-merge-group; test $? -eq 1 )
+```
+
+Expected result: the safe fixture prints `OK`; the broken fixture reports four
+contract errors and the final trial status is successful. The trial only reads
+the included local fixtures. Remove its temporary directory afterwards if you
+wish (`rm -rf "$trial"`).
+
+## Quick start on your repository
 
 Copy the required check names from your branch protection or ruleset into a
 newline-delimited file:
@@ -128,6 +153,15 @@ python -m ruff check src tests
 
 See [`VALIDATION.md`](VALIDATION.md) for fixture and public-repository dry-run
 evidence.
+
+## Feedback
+
+Use the [privacy-safe feedback form](https://github.com/canilbey/checkgate/issues/new?template=feedback.yml)
+for trial results, unexpected findings, documentation improvements, or narrow
+requests. It requires a minimal public-data confirmation; do not post secrets,
+private repository details, personal information, proprietary workflows, or full
+logs. Report security-sensitive problems through GitHub's private
+[Security advisory form](https://github.com/canilbey/checkgate/security/advisories/new).
 
 ## License
 
