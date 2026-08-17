@@ -1,0 +1,58 @@
+name: Feedback
+
+description: Share a checkgate result, usability problem, or narrowly scoped request.
+title: "[Feedback]: "
+labels:
+  - feedback
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for trying checkgate. This is a public issue. Do not include secrets, tokens, private repository names or URLs, personal information, proprietary workflow contents, or full logs. Reduce examples to the smallest safe YAML snippet. For security-sensitive reports, use the repository's private **Security** reporting flow instead.
+  - type: dropdown
+    id: feedback_type
+    attributes:
+      label: Feedback type
+      options:
+        - Trial or onboarding problem
+        - Unexpected finding
+        - Missed finding
+        - Documentation improvement
+        - Narrow feature request
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: checkgate version
+      description: Run `checkgate --version`, or enter the release/tag used. Do not paste environment details.
+      placeholder: v0.1.0
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+      description: Describe the intended outcome without identifying a private repository or organization.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened instead?
+      description: Include only minimal, redacted output or synthetic YAML. Never paste tokens, secrets, private URLs, or proprietary workflow files.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal safe reproduction
+      description: Optional. Prefer a tiny synthetic workflow and required-check list that anyone may inspect publicly.
+      render: yaml
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Public-data confirmation
+      options:
+        - label: I checked this report and it contains no secrets, personal information, private repository details, or proprietary content.
+          required: true
