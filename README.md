@@ -50,10 +50,13 @@ python3 -m venv "$trial/venv" && \
 "$trial/venv/bin/checkgate" audit \
   --workflows "$trial/checkgate/fixtures/safe/workflows" \
   --required-file "$trial/checkgate/fixtures/safe/required.txt" && \
-( "$trial/venv/bin/checkgate" audit \
+( set +e
+  "$trial/venv/bin/checkgate" audit \
     --workflows "$trial/checkgate/fixtures/workflows" \
     --required-file "$trial/checkgate/fixtures/required.txt" \
-    --require-merge-group; test $? -eq 1 )
+    --require-merge-group
+  broken_rc=$?
+  test "$broken_rc" -eq 1 )
 ```
 
 Expected result: the safe fixture prints `OK`; the broken fixture reports four
