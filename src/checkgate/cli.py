@@ -3,8 +3,8 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Sequence
 
 from checkgate.audit import AuditInputError, audit, discover_workflows
 from checkgate.models import AuditResult

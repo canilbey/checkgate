@@ -9,7 +9,6 @@ import yaml
 from checkgate.audit import AuditInputError, audit, discover_workflows, load_workflow
 from checkgate.cli import main, render_text
 
-
 FIXTURES = Path(__file__).parents[1] / "fixtures"
 
 
