@@ -1,0 +1,16 @@
+name: CI
+on:
+  pull_request:
+  merge_group:
+
+jobs:
+  tests:
+    name: unit-tests
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo test
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo lint
